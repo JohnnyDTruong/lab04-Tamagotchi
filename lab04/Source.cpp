@@ -5,154 +5,164 @@
 	Lab 04 - Classes (Tamagotchi)
 */
 
-#include <iostream> //header
-#include <time.h> //header
-#include <string> //header
+#include <iostream>
+#include <cstdlib>  // for rand and srand
+#include <ctime>    // for time
+#include <string>   // for string
+
 using namespace std;
 
 class Tamagotchi
 {
-	//private function cannot be changed by anyone
 private:
-	string name;
-	int hunger;
-	int happiness;
-	int age;
+    string name;
+    int hunger;
+    int happiness;
+    int age;
 
-	//anyone can use the public function
 public:
-	Tamagotchi()
-	{
-		hunger = rand() % 5 + 1;
-		happiness = rand() % 5 + 1;
-		age = 0;
-	}
-	//this function lets the user assign the name
-	void setName(string c)
-	{
-		name = c;
-	}
-	//this gets the name from the class
-	//while being used in the main
-	string getName()
-	{
-		return name;
-	}
-	//this retrieves the hunger value of the Tamagotchi
-	int getHungry()
-	{
-		return hunger;
-	}
-	//this retrieves the happy value of the Tamagotchi
-	int getHappy()
-	{
-		return happiness;
-	}
-	//this retrieves the age of the Tamagotchi
-	int tamAge()
-	{
-		return age;
-	}
-	//this allows a plus one increase to the hunger value
-	void goFeed()
-	{
-		cout << "Yummm yumm yummmmy!!" << name << " ate the delicious food. (+1 HUNGER)" << endl;
-		hunger++;
-	}
+    // Constructor initializes the Tamagotchi
+    Tamagotchi()
+    {
+        hunger = rand() % 5 + 1;
+        happiness = rand() % 5 + 1;
+        age = 0;
+    }
 
-	//this function increases the happiness value by 1
-	void goPlay()
-	{
-		cout << "HELLO, let us have the time of our lives!!" << name << " wants to PLAY!! (+1 HAPPINESS)" << endl;
-		happiness++;
-	}
+    // Set the name of the Tamagotchi
+    void setName(const string& c)
+    {
+        name = c;
+    }
 
-	//this decreases the hunger by 1 if the value is 0
-	//this function decreases the happiness by 1 if the value is 1
-	void isDecrease()
-	{
-		int anyNum = rand() % 2;
-		if (anyNum == 0)
-		{
-			cout << name << " gets to eat. (-1 Hunger)" << endl;
-			hunger--;
-		}
-		else
-		{
-			cout << name << " needs attention and wants to have a good day. (-1 Happiness)" << endl;
-			happiness--;
-		}
-		age++;
-	}
-	//this function displays the Tamagotchi's stats
-	void displayAttributes()
-	{
-		cout << "--" << name << "'s stats--" << endl;
-		cout << "Hunger: " << hunger << endl;
-		cout << "Happiness: " << happiness << endl;
-		cout << "Age: " << age << endl;
-	}
-	//this function allows the user the option
-	//to either feed or play with the Tamagotchi
-	char theMenu()
-	{
-		char option;
-		cout << "Main Menu:" << endl;
-		cout << "1. Feed" << endl;
-		cout << "2. Play" << endl;
-		cout << "Choose either (1 or 2)" << endl;
-		cin >> option;
-		return option;
-	}
+    // Get the name of the Tamagotchi
+    string getName() const
+    {
+        return name;
+    }
+
+    // Get the hunger level of the Tamagotchi
+    int getHunger() const
+    {
+        return hunger;
+    }
+
+    // Get the happiness level of the Tamagotchi
+    int getHappiness() const
+    {
+        return happiness;
+    }
+
+    // Get the age of the Tamagotchi
+    int getAge() const
+    {
+        return age;
+    }
+
+    // Feed the Tamagotchi
+    void goFeed()
+    {
+        cout << "Yummm yumm yummmmy!! " << name << " ate the delicious food. (+1 HUNGER)" << endl;
+        hunger++;
+    }
+
+    // Play with the Tamagotchi
+    void goPlay()
+    {
+        cout << "HELLO, let us have the time of our lives!! " << name << " wants to PLAY!! (+1 HAPPINESS)" << endl;
+        happiness++;
+    }
+
+    // Decrease either hunger or happiness
+    void isDecrease()
+    {
+        int anyNum = rand() % 2;
+        if (anyNum == 0)
+        {
+            cout << name << " gets hungrier. (-1 Hunger)" << endl;
+            hunger--;
+        }
+        else
+        {
+            cout << name << " needs attention and wants to have a good day. (-1 Happiness)" << endl;
+            happiness--;
+        }
+        age++;
+    }
+
+    // Display the Tamagotchi's attributes
+    void displayAttributes() const
+    {
+        cout << "--" << name << "'s stats--" << endl;
+        cout << "Hunger: " << hunger << endl;
+        cout << "Happiness: " << happiness << endl;
+        cout << "Age: " << age << endl;
+    }
+
+    // Show the menu and get the user's choice
+    char theMenu() const
+    {
+        char option;
+        cout << "Main Menu:" << endl;
+        cout << "1. Feed" << endl;
+        cout << "2. Play" << endl;
+        cout << "Choose either (1 or 2): ";
+        cin >> option;
+        return option;
+    }
 };
 
 int main()
 {
-	srand(time(0));
-	string name;
-	char option;
-	cout << "-Virtual Orangutan-" << endl;
-	cout << "---- - m------m------" << endl;
-	cout << "       @(o.o)@" << endl;
-	cout << "         (0)~~" << endl;
-	cout << "         o o" << endl;
-	cout << "Please input a name for your pet Orangutan: " << endl;
-	cin >> name;
-	Tamagotchi Name;
-	Name.setName(name);
-	do
-	{
-		Name.displayAttributes();
-		option = Name.theMenu();
-		if (option == '1')
-		{
-			Name.goFeed();
-			Name.isDecrease();
-		}
-		if (option == '2')
-		{
-			Name.goPlay();
-			Name.isDecrease();
-		}
-	} while (Name.tamAge() <= 5 && Name.Hungry() > 0 && Name.Happy() > 0);
-	//this function allows the Tamagotchi
-	//to have the age limit be up to 5
-	//after that it will be gone :(
-	if (Name.tamAge() > 5)
-	{
-		cout << "This very moment, we lost a true hero but " << name << " was very old. RIP homie " << name << "!!!!" << endl;
-	}
-	//this function allows the happiness or hunger of 
-	//the Tamagotchi to reach 0
-	//which will lead to its passing
-	if (Name.Happy() == 0 || Name.Hungry() == 0)
-	{
-		cout << "Why did you let it go like that?" << name << " was such an honorble!!!" << endl;
-	}
+    srand(static_cast<unsigned>(time(0)));  // Seed the random number generator
+    string name;
+    char option;
+    cout << "-Virtual Orangutan-" << endl;
+    cout << "---- - m------m------" << endl;
+    cout << "       @(o.o)@" << endl;
+    cout << "         (0)~~" << endl;
+    cout << "         o o" << endl;
+    cout << "Please input a name for your pet Orangutan: ";
+    cin >> name;
+    cin.ignore();  // Clear newline left in the input buffer
 
-	system("PAUSE");
-	return 0;
+    Tamagotchi Name;
+    Name.setName(name);
+
+    do
+    {
+        Name.displayAttributes();
+        option = Name.theMenu();
+        if (option == '1')
+        {
+            Name.goFeed();
+            Name.isDecrease();
+        }
+        else if (option == '2')
+        {
+            Name.goPlay();
+            Name.isDecrease();
+        }
+        else
+        {
+            cout << "Invalid choice. Please choose 1 or 2." << endl;
+        }
+    } while (Name.getAge() <= 5 && Name.getHunger() > 0 && Name.getHappiness() > 0);
+
+    // Check the status of the Tamagotchi
+    if (Name.getAge() > 5)
+    {
+        cout << "This very moment, we lost a true hero but " << name << " was very old. RIP homie " << name << "!!!!" << endl;
+    }
+    else if (Name.getHappiness() <= 0 || Name.getHunger() <= 0)
+    {
+        cout << "Why did you let it go like that? " << name << " was such an honorable!!!" << endl;
+    }
+
+    system("PAUSE");
+    return 0;
 }
+
 /*
 -Virtual Orangutan-
 ---- - m------m------
